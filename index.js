@@ -4,6 +4,7 @@ import * as THREE from 'three';
 class TwitchChat {
 	/**
 	 * @param {Object} options The configuration object.
+	 * @param {Object} options[].updateAutonomously If false, the library will not mark materials with "needsUpdate"
 	 * @param {Object} options[].materialType The type of material to use for the emote. Default: MeshBasicMaterial
 	 * @param {Object} options[].materialOptions options to be passed to the material. Default: { map: emoteTexture }
 	 * @param {Number} options[].channels An array of twitch channels to connect to, example: ["moonmoon"]
@@ -14,6 +15,14 @@ class TwitchChat {
 	 * @param {Number} options[].gifAPI Define the URL of your own GIF parsing server.
 	 */
 	constructor(options) {
+		Object.assign({
+			materialType: THREE.MeshBasicMaterial,
+			materialOptions: { transparent: true, side: THREE.DoubleSide},
+		}, options)
+		if (options.updateAutonomously === undefined) {
+			options.updateAutonomously = true;
+		}
+
 		this.options = options;
 		this.chat = new Chat(options);
 
@@ -45,6 +54,19 @@ class TwitchChat {
 				cb(output);
 			});
 		})
+
+		if (this.options.updateAutonomously) {
+			this.updateAllEmotes();
+		}
+	}
+
+	updateAllEmotes () {
+		for (let key in this.emotes) {
+			this.emotes[key].texture.needsUpdate = true;
+		}
+		if (this.options.updateAutonomously) {
+			window.requestAnimationFrame(this.updateAllEmotes.bind(this));
+		}
 	}
 
 	/**
