@@ -3,7 +3,8 @@
 	"version": "0.1.2",
 	"description": "A library to use `twitch-chat-emotes` with ThreeJS",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "npx webpack serve"
 	},
 	"repository": {
 		"type": "git",
@@ -18,5 +19,14 @@
 	"dependencies": {
 		"three": "^0.134.0",
 		"twitch-chat-emotes": "^0.2.2"
+	},
+	"devDependencies": {
+		"html-webpack-plugin": "^5.5.0",
+		"webpack": "^5.44.0",
+		"webpack-cli": "^4.7.2",
+		"css-loader": "^5.2.6",
+		"html-loader": "^2.1.2",
+		"style-loader": "^3.3.1",
+		"webpack-dev-server": "^4.4.0"
 	}
 }
