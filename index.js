@@ -1,8 +1,7 @@
 import Chat from 'twitch-chat-emotes';
-import THREE from 'three';
+import * as THREE from 'three';
 
-
-export default class TwitchChat {
+class TwitchChat {
 	/**
 	 * @param {Object} options The configuration object.
 	 * @param {Object} options[].materialType The type of material to use for the emote. Default: MeshBasicMaterial
@@ -53,3 +52,5 @@ export default class TwitchChat {
 		this.listeners.push(callback);
 	}
 }
+
+export default TwitchChat;
