@@ -37,7 +37,7 @@ class TwitchChat {
 						...this.options.materialOptions
 					})
 				}
-				output.push(this.emotes[element.id].material);
+				output.push(this.emotes[element.id]);
 			}
 			this.listeners.forEach(cb => {
 				cb(output);
