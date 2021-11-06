@@ -31,6 +31,8 @@ class TwitchChat {
 				if (!this.emotes[element.id]) {
 					this.emotes[element.id] = {
 						texture: new THREE.CanvasTexture(element.gif.canvas),
+						name: element.name,
+						id: element.id,
 					};
 					this.emotes[element.id].material = new this.options.materialType({
 						map: this.emotes[element.id].texture,
