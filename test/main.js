@@ -1,7 +1,6 @@
 import TwitchChat from "..";
 import * as THREE from "three";
-import './main.css';
-
+import "./main.css";
 
 /*
 ** connect to twitch chat
@@ -65,7 +64,6 @@ window.addEventListener('DOMContentLoaded', () => {
 /*
 ** Draw loop
 */
-
 let lastFrame = Date.now();
 function draw() {
 	if (query_vars.stats) stats.begin();
@@ -76,9 +74,11 @@ function draw() {
 	for (let index = sceneEmoteArray.length - 1; index >= 0; index--) {
 		const element = sceneEmoteArray[index];
 		element.position.addScaledVector(element.velocity, delta);
-		if (element.timestamp + 5000 < Date.now()) {
+		if (element.timestamp + element.lifespan < Date.now()) {
 			sceneEmoteArray.splice(index, 1);
 			scene.remove(element);
+		} else {
+			element.update();
 		}
 	}
 	lastFrame = Date.now();
@@ -94,7 +94,9 @@ function draw() {
 const sceneEmoteArray = [];
 ChatInstance.listen((emotes) => {
 	const group = new THREE.Group();
+	group.lifespan = 5000;
 	group.timestamp = Date.now();
+
 	let i = 0;
 	emotes.forEach((emote) => {
 		const sprite = new THREE.Sprite(emote.material);
@@ -102,12 +104,26 @@ ChatInstance.listen((emotes) => {
 		group.add(sprite);
 		i++;
 	})
+
+	// Set velocity to a random normalized value
 	group.velocity = new THREE.Vector3(
 		(Math.random() - 0.5) * 2,
 		(Math.random() - 0.5) * 2,
 		(Math.random() - 0.5) * 2
 	);
 	group.velocity.normalize();
+
+	group.update = () => { // called every frame
+		let progress = (Date.now() - group.timestamp) / group.lifespan;
+		if (progress < 0.25) { // grow to full size in first quarter
+			group.scale.setScalar(progress * 4);
+		} else if (progress > 0.75) { // shrink to nothing in last quarter
+			group.scale.setScalar((1 - progress) * 4);
+		} else { // maintain full size in middle
+			group.scale.setScalar(1);
+		}
+	}
+
 	scene.add(group);
 	sceneEmoteArray.push(group);
 });
