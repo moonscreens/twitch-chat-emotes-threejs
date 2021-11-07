@@ -3,6 +3,10 @@ import * as THREE from "three";
 import './main.css';
 
 
+/*
+** connect to twitch chat
+*/
+
 // a default array of twitch channels to join
 let channels = ['moonmoon'];
 
@@ -16,6 +20,22 @@ if (query_vars.channels) {
 	channels = query_vars.channels.split(',');
 }
 
+const ChatInstance = new TwitchChat({
+	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
+	materialType: THREE.SpriteMaterial,
+
+	// Passed to material options
+	materialOptions: {
+		transparent: true,
+	},
+
+	channels,
+	maximumEmoteLimit: 3,
+})
+
+/*
+** Initiate ThreejS scene
+*/
 
 const camera = new THREE.PerspectiveCamera(
 	70,
@@ -25,50 +45,26 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 5;
 
-
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setSize(window.innerWidth, window.innerHeight);
-
-
-const ChatInstance = new TwitchChat({
-	materialType: THREE.SpriteMaterial,
-	materialOptions: {
-		transparent: true,
-	},
-	channels,
-	maximumEmoteLimit: 3,
-})
-
-const sceneEmoteArray = [];
-ChatInstance.listen((emotes) => {
-	const group = new THREE.Group();
-	group.timestamp = Date.now();
-	let i = 0;
-	emotes.forEach((emote) => {
-		const sprite = new THREE.Sprite(emote.material);
-		sprite.position.x = i;
-		group.add(sprite);
-		i++;
-	})
-	group.velocity = new THREE.Vector3(
-		(Math.random() - 0.5) * 2,
-		(Math.random() - 0.5) * 2,
-		(Math.random() - 0.5) * 2
-	);
-	group.velocity.normalize();
-	scene.add(group);
-	sceneEmoteArray.push(group);
-});
 
 function resize() {
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
 	renderer.setSize(window.innerWidth, window.innerHeight);
 }
-function init() {
+
+window.addEventListener('DOMContentLoaded', () => {
+	window.addEventListener('resize', resize);
+	if (query_vars.stats) document.body.appendChild(stats.dom);
 	document.body.appendChild(renderer.domElement);
-}
+	draw();
+})
+
+/*
+** Draw loop
+*/
 
 let lastFrame = Date.now();
 function draw() {
@@ -91,12 +87,27 @@ function draw() {
 	if (query_vars.stats) stats.end();
 };
 
-window.addEventListener('DOMContentLoaded', () => {
 
-	window.addEventListener('resize', resize);
-
-	if (query_vars.stats) document.body.appendChild(stats.dom);
-
-	init();
-	draw();
-})
+/*
+** Handle Twitch Chat Emotes
+*/
+const sceneEmoteArray = [];
+ChatInstance.listen((emotes) => {
+	const group = new THREE.Group();
+	group.timestamp = Date.now();
+	let i = 0;
+	emotes.forEach((emote) => {
+		const sprite = new THREE.Sprite(emote.material);
+		sprite.position.x = i;
+		group.add(sprite);
+		i++;
+	})
+	group.velocity = new THREE.Vector3(
+		(Math.random() - 0.5) * 2,
+		(Math.random() - 0.5) * 2,
+		(Math.random() - 0.5) * 2
+	);
+	group.velocity.normalize();
+	scene.add(group);
+	sceneEmoteArray.push(group);
+});
