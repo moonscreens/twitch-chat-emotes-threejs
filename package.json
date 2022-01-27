@@ -1,6 +1,6 @@
 {
 	"name": "twitch-chat-emotes-threejs",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"description": "A library to use `twitch-chat-emotes` with ThreeJS",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
