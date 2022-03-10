@@ -17,6 +17,9 @@ const ChatInstance = new TwitchChat({
 		transparent: true,
 	},
 
+	materialHook: material => console.log, // receives unique emote materials on creation
+	textureHook: texture => console.log, // receives unique emote textures on creation
+
 	channels,
 	maximumEmoteLimit: 3,
 });
