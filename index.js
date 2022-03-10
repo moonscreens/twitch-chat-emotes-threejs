@@ -13,6 +13,8 @@ class TwitchChat {
 	 * @param {Number} options[].duplicateEmoteLimit The number of duplicate emotes permitted for a single message.
 	 * @param {Number} options[].duplicateEmoteLimit_pleb The number of duplicate emotes permitted for a single message from an unsubscribed user, defaults to duplicateEmoteLimit.
 	 * @param {Number} options[].gifAPI Define the URL of your own GIF parsing server.
+	 * @param {Function} options[].textureHook Define a function to be called when a texture is created.
+	 * @param {Function} options[].materialHook Define a function to be called when an material is created.
 	 */
 	constructor(options) {
 		if (!options.hasOwnProperty('THREE')) {
@@ -47,10 +49,16 @@ class TwitchChat {
 						name: element.name,
 						id: element.id,
 					};
+					if (this.options.textureHook) {
+						this.options.textureHook(this.emotes[element.id].texture);
+					}
 					this.emotes[element.id].material = new this.options.materialType({
 						map: this.emotes[element.id].texture,
 						...this.options.materialOptions
 					})
+					if (this.options.materialHook) {
+						this.options.materialHook(this.emotes[element.id].material);
+					}
 				}
 				output.push(this.emotes[element.id]);
 			}
