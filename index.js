@@ -5,7 +5,7 @@ class TwitchChat {
 	 * @param {Object} options The configuration object.
 	 * @param {Object} options[].THREE REQUIRED, The THREE.js library.
 	 * @param {Object} options[].updateAutonomously If false, the library will not mark materials with "needsUpdate"
-	 * @param {Object} options[].materialType The type of material to use for the emote. Default: MeshBasicMaterial
+	 * @param {Object} options[].materialType The material to use for the emote. You should pass in a Material from THREE. Default: MeshBasicMaterial
 	 * @param {Object} options[].materialOptions options to be passed to the material. Default: { map: emoteTexture }
 	 * @param {Number} options[].channels An array of twitch channels to connect to, example: ["moonmoon"]
 	 * @param {Number} options[].maximumEmoteLimit The maximum number of emotes permitted for a single message.
@@ -21,15 +21,20 @@ class TwitchChat {
 			throw new Error('THREE needs to be passed to TwitchChat constructor');
 		}
 
-		Object.assign({
+
+		this.options = {
 			materialType: options.THREE.MeshBasicMaterial,
-			materialOptions: { transparent: true, side: options.THREE.DoubleSide},
-		}, options)
-		if (options.updateAutonomously === undefined) {
-			options.updateAutonomously = true;
+			materialOptions: {
+				transparent: true,
+				side: options.THREE.DoubleSide,
+				...options.materialOptions
+			},
+			...options
+		};
+		if (this.options.updateAutonomously === undefined) {
+			this.options.updateAutonomously = true;
 		}
 
-		this.options = options;
 		this.chat = new Chat(options);
 
 		this.emotes = {};
@@ -72,7 +77,7 @@ class TwitchChat {
 		}
 	}
 
-	updateAllEmotes () {
+	updateAllEmotes() {
 		for (let key in this.emotes) {
 			this.emotes[key].texture.needsUpdate = true;
 		}
@@ -84,7 +89,7 @@ class TwitchChat {
 	/**
 	 * @param {Function} callback called with an array of THREE.Material objects each time a chat message with emotes is sent.
 	 */
-	listen (callback) {
+	listen(callback) {
 		this.listeners.push(callback);
 	}
 }

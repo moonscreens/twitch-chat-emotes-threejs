@@ -1,6 +1,6 @@
 {
 	"name": "twitch-chat-emotes-threejs",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"description": "A library to use `twitch-chat-emotes` with ThreeJS",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -17,7 +17,7 @@
 	},
 	"homepage": "https://github.com/moonscreens/twitch-chat-emotes-threejs#readme",
 	"dependencies": {
-		"twitch-chat-emotes": "^0.2.2"
+		"twitch-chat-emotes": "^0.2.3"
 	},
 	"devDependencies": {
 		"css-loader": "^5.2.6",

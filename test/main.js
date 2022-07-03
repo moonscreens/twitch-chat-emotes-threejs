@@ -25,7 +25,7 @@ const ChatInstance = new TwitchChat({
 	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
 	materialType: THREE.SpriteMaterial,
 
-	// Passed to material options
+	// Passed to emote material on creation
 	materialOptions: {
 		transparent: true,
 	},
