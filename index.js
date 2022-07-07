@@ -53,6 +53,7 @@ class TwitchChat {
 						texture: new this.options.THREE.CanvasTexture(element.gif.canvas),
 						name: element.name,
 						id: element.id,
+						gif: element.gif,
 					};
 					if (this.options.textureHook) {
 						this.options.textureHook(this.emotes[element.id].texture);
@@ -80,6 +81,10 @@ class TwitchChat {
 	updateAllEmotes() {
 		for (let key in this.emotes) {
 			this.emotes[key].texture.needsUpdate = true;
+			if (this.emotes[key].gif && this.emotes[key].gif.needsUpdate) {
+				this.emotes[key].gif.needsUpdate = false;
+				this.emotes[key].texture.needsUpdate = true;
+			}
 		}
 		if (this.options.updateAutonomously) {
 			window.requestAnimationFrame(this.updateAllEmotes.bind(this));
