@@ -56,14 +56,14 @@ class TwitchChat {
 						gif: element.gif,
 					};
 					if (this.options.textureHook) {
-						this.options.textureHook(this.emotes[element.id].texture);
+						this.options.textureHook(this.emotes[element.id].texture, element.name);
 					}
 					this.emotes[element.id].material = new this.options.materialType({
 						map: this.emotes[element.id].texture,
 						...this.options.materialOptions
 					})
 					if (this.options.materialHook) {
-						this.options.materialHook(this.emotes[element.id].material);
+						this.options.materialHook(this.emotes[element.id].material, element.name);
 					}
 				}
 				output.push(this.emotes[element.id]);
