@@ -7,8 +7,6 @@ A Three.JS specific variant of the [twitch-chat-emotes](https://github.com/Caleb
 import TwitchChat from 'twitch-chat-emotes-threejs';
 
 const ChatInstance = new TwitchChat({
-	THREE, // Pass the THREE object
-
 	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
 	materialType: THREE.SpriteMaterial,
 
