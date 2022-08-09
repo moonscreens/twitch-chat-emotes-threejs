@@ -1,11 +1,11 @@
+import { CanvasTexture, DoubleSide, MeshBasicMaterial } from 'three';
 import Chat from 'twitch-chat-emotes';
 
 class TwitchChat {
 	/**
 	 * @param {Object} options The configuration object.
-	 * @param {Object} options[].THREE REQUIRED, The THREE.js library.
 	 * @param {Object} options[].updateAutonomously If false, the library will not mark materials with "needsUpdate"
-	 * @param {Object} options[].materialType The material to use for the emote. You should pass in a Material from THREE. Default: MeshBasicMaterial
+	 * @param {Object} options[].materialType The THREE material to use for the emote. Default: THREE.MeshBasicMaterial
 	 * @param {Object} options[].materialOptions options to be passed to the material. Default: { map: emoteTexture }
 	 * @param {Number} options[].channels An array of twitch channels to connect to, example: ["moonmoon"]
 	 * @param {Number} options[].maximumEmoteLimit The maximum number of emotes permitted for a single message.
@@ -17,16 +17,11 @@ class TwitchChat {
 	 * @param {Function} options[].materialHook Define a function to be called when an material is created.
 	 */
 	constructor(options) {
-		if (!options.hasOwnProperty('THREE')) {
-			throw new Error('THREE needs to be passed to TwitchChat constructor');
-		}
-
-
 		this.options = {
-			materialType: options.THREE.MeshBasicMaterial,
+			materialType: MeshBasicMaterial,
 			materialOptions: {
 				transparent: true,
-				side: options.THREE.DoubleSide,
+				side: DoubleSide,
 				...options.materialOptions
 			},
 			...options
@@ -50,7 +45,7 @@ class TwitchChat {
 				const element = emotes[index];
 				if (!this.emotes[element.id]) {
 					this.emotes[element.id] = {
-						texture: new this.options.THREE.CanvasTexture(element.gif.canvas),
+						texture: new CanvasTexture(element.gif.canvas),
 						name: element.name,
 						id: element.id,
 						gif: element.gif,

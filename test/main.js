@@ -1,6 +1,6 @@
 import TwitchChat from "..";
-import * as THREE from "three";
 import "./main.css";
+import { Group, PerspectiveCamera, Scene, Sprite, SpriteMaterial, Vector3, WebGLRenderer } from "three";
 
 /*
 ** connect to twitch chat
@@ -20,10 +20,8 @@ if (query_vars.channels) {
 }
 
 const ChatInstance = new TwitchChat({
-	THREE,
-
 	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
-	materialType: THREE.SpriteMaterial,
+	materialType: SpriteMaterial,
 
 	// Passed to emote material on creation
 	materialOptions: {
@@ -38,7 +36,7 @@ const ChatInstance = new TwitchChat({
 ** Initiate ThreejS scene
 */
 
-const camera = new THREE.PerspectiveCamera(
+const camera = new PerspectiveCamera(
 	70,
 	window.innerWidth / window.innerHeight,
 	0.1,
@@ -46,8 +44,8 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 5;
 
-const scene = new THREE.Scene();
-const renderer = new THREE.WebGLRenderer({ antialias: false });
+const scene = new Scene();
+const renderer = new WebGLRenderer({ antialias: false });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 function resize() {
@@ -95,20 +93,20 @@ function draw() {
 */
 const sceneEmoteArray = [];
 ChatInstance.listen((emotes) => {
-	const group = new THREE.Group();
+	const group = new Group();
 	group.lifespan = 5000;
 	group.timestamp = Date.now();
 
 	let i = 0;
 	emotes.forEach((emote) => {
-		const sprite = new THREE.Sprite(emote.material);
+		const sprite = new Sprite(emote.material);
 		sprite.position.x = i;
 		group.add(sprite);
 		i++;
 	})
 
 	// Set velocity to a random normalized value
-	group.velocity = new THREE.Vector3(
+	group.velocity = new Vector3(
 		(Math.random() - 0.5) * 2,
 		(Math.random() - 0.5) * 2,
 		(Math.random() - 0.5) * 2
