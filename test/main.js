@@ -30,7 +30,10 @@ const ChatInstance = new TwitchChat({
 
 	channels,
 	maximumEmoteLimit: 3,
-})
+});
+
+import testImageURL from './test.png';
+ChatInstance.addCustomEmote('test', testImageURL);
 
 /*
 ** Initiate ThreejS scene

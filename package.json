@@ -17,10 +17,11 @@
 	},
 	"homepage": "https://github.com/moonscreens/twitch-chat-emotes-threejs#readme",
 	"dependencies": {
-		"twitch-chat-emotes": "^0.2.5"
+		"twitch-chat-emotes": "^0.2.6"
 	},
 	"devDependencies": {
 		"css-loader": "^5.2.6",
+		"file-loader": "^6.2.0",
 		"html-loader": "^2.1.2",
 		"html-webpack-plugin": "^5.5.0",
 		"style-loader": "^3.3.1",

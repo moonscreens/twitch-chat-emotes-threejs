@@ -1,7 +1,7 @@
 import { CanvasTexture, DoubleSide, MeshBasicMaterial } from 'three';
 import Chat from 'twitch-chat-emotes';
 
-class TwitchChat {
+class TwitchEmotes {
 	/**
 	 * @param {Object} options The configuration object.
 	 * @param {Object} options[].updateAutonomously If false, the library will not mark materials with "needsUpdate"
@@ -30,16 +30,16 @@ class TwitchChat {
 			this.options.updateAutonomously = true;
 		}
 
-		this.chat = new Chat(options);
-
 		this.emotes = {};
 		this.listeners = [];
 
 		// create our chat instance
-		this.ChatInstance = new Chat(this.options)
+		this.EmoteService = new Chat(this.options)
+
+		this.addCustomEmote = this.EmoteService.addCustomEmote.bind(this.EmoteService);
 
 		// add a callback function for when a new message with emotes is sent
-		this.ChatInstance.on("emotes", (emotes) => {
+		this.EmoteService.on("emotes", (emotes) => {
 			let output = [];
 			for (let index = 0; index < emotes.length; index++) {
 				const element = emotes[index];
@@ -94,4 +94,4 @@ class TwitchChat {
 	}
 }
 
-export default TwitchChat;
+export default TwitchEmotes;
