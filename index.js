@@ -1,4 +1,4 @@
-import { CanvasTexture, DoubleSide, MeshBasicMaterial } from 'three';
+import { DoubleSide, MeshBasicMaterial, Texture } from 'three';
 import Chat from 'twitch-chat-emotes';
 
 class TwitchEmotes {
@@ -45,7 +45,7 @@ class TwitchEmotes {
 				const element = emotes[index];
 				if (!this.emotes[element.id]) {
 					this.emotes[element.id] = {
-						texture: new CanvasTexture(element.gif.canvas),
+						texture: new Texture(element.gif.canvas),
 						name: element.name,
 						id: element.id,
 						gif: element.gif,
@@ -75,7 +75,6 @@ class TwitchEmotes {
 
 	updateAllEmotes() {
 		for (let key in this.emotes) {
-			this.emotes[key].texture.needsUpdate = true;
 			if (this.emotes[key].gif && this.emotes[key].gif.needsUpdate) {
 				this.emotes[key].gif.needsUpdate = false;
 				this.emotes[key].texture.needsUpdate = true;
