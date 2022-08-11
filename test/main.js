@@ -1,6 +1,6 @@
 import TwitchChat from "..";
 import "./main.css";
-import { Group, PerspectiveCamera, Scene, Sprite, SpriteMaterial, Vector3, WebGLRenderer } from "three";
+import { Group, Mesh, MeshBasicMaterial, PerspectiveCamera, PlaneBufferGeometry, Scene, Sprite, SpriteMaterial, Vector3, WebGLRenderer } from "three";
 
 /*
 ** connect to twitch chat
@@ -21,7 +21,7 @@ if (query_vars.channels) {
 
 const ChatInstance = new TwitchChat({
 	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
-	materialType: SpriteMaterial,
+	materialType: MeshBasicMaterial,
 
 	// Passed to emote material on creation
 	materialOptions: {
@@ -73,7 +73,6 @@ function draw() {
 	requestAnimationFrame(draw);
 	const delta = (Date.now() - lastFrame) / 1000;
 
-
 	for (let index = sceneEmoteArray.length - 1; index >= 0; index--) {
 		const element = sceneEmoteArray[index];
 		element.position.addScaledVector(element.velocity, delta);
@@ -95,6 +94,10 @@ function draw() {
 ** Handle Twitch Chat Emotes
 */
 const sceneEmoteArray = [];
+const emoteGeometry = new PlaneBufferGeometry(1, 1);
+const shadowMaterial = new MeshBasicMaterial({
+	color: 0x222222,
+})
 ChatInstance.listen((emotes) => {
 	const group = new Group();
 	group.lifespan = 5000;
@@ -102,10 +105,16 @@ ChatInstance.listen((emotes) => {
 
 	let i = 0;
 	emotes.forEach((emote) => {
-		const sprite = new Sprite(emote.material);
+		const sprite = new Mesh(emoteGeometry, emote.material);
 		sprite.position.x = i;
 		group.add(sprite);
 		i++;
+
+		const shadow = new Mesh(emoteGeometry, shadowMaterial);
+		shadow.position.x = sprite.position.x;
+		shadow.position.z = -0.01;
+		shadow.scale.setScalar(1.1)
+		group.add(shadow);
 	})
 
 	// Set velocity to a random normalized value
