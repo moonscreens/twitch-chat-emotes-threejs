@@ -2229,10 +2229,10 @@ terser@^5.10.0, terser@^5.7.2:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
-three@^0.143.0:
-  version "0.143.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.143.0.tgz#1455bca132cc2b20beb7f41d313e10c29e5ed9df"
-  integrity sha512-oKcAGYHhJ46TGEuHjodo2n6TY2R6lbvrkp+feKZxqsUL/WkH7GKKaeu6RHeyb2Xjfk2dPLRKLsOP0KM2VgT8Zg==
+three@^0.146.0:
+  version "0.146.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.146.0.tgz#fd80f0d128ab4bb821a02191ae241e4e6326f17a"
+  integrity sha512-1lvNfLezN6OJ9NaFAhfX4sm5e9YCzHtaRgZ1+B4C+Hv6TibRMsuBAM5/wVKzxjpYIlMymvgsHEFrrigEfXnb2A==
 
 thunky@^1.0.2:
   version "1.1.0"
@@ -2269,10 +2269,10 @@ tslib@^2.0.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
-twitch-chat-emotes@^0.2.6:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/twitch-chat-emotes/-/twitch-chat-emotes-0.2.6.tgz#c68d5f4363c57cc904d2f452b138f29a85a3c950"
-  integrity sha512-g7xJ2rQ6mmfop1GwuIS/jgunVHCIT+Ud0SBRfLn25KBizkM0FKPN2CRl+jTtCKCKrmBSh/roWmjcJ53M2JxQmA==
+twitch-chat-emotes@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/twitch-chat-emotes/-/twitch-chat-emotes-0.3.3.tgz#093d10ae6f6c661b4e6e47734a52cf288eaf824e"
+  integrity sha512-o1g61S7p2SArCOrXx8weqNu3sSQ1UdohqqtvqrfA7BHebihhGK61/PqPE+IkWIEdBiKa3pb5Jna1dWxy8x+ucQ==
   dependencies:
     tmi.js "^1.8.5"
 

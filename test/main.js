@@ -48,7 +48,7 @@ const camera = new PerspectiveCamera(
 camera.position.z = 5;
 
 const scene = new Scene();
-const renderer = new WebGLRenderer({ antialias: false });
+const renderer = new WebGLRenderer({ antialias: false, transparent: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 function resize() {
@@ -59,7 +59,6 @@ function resize() {
 
 window.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('resize', resize);
-	if (query_vars.stats) document.body.appendChild(stats.dom);
 	document.body.appendChild(renderer.domElement);
 	draw();
 })
@@ -69,7 +68,6 @@ window.addEventListener('DOMContentLoaded', () => {
 */
 let lastFrame = Date.now();
 function draw() {
-	if (query_vars.stats) stats.begin();
 	requestAnimationFrame(draw);
 	const delta = (Date.now() - lastFrame) / 1000;
 
@@ -86,7 +84,6 @@ function draw() {
 	lastFrame = Date.now();
 
 	renderer.render(scene, camera);
-	if (query_vars.stats) stats.end();
 };
 
 

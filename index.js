@@ -43,25 +43,24 @@ class TwitchEmotes {
 			let output = [];
 			for (let index = 0; index < emotes.length; index++) {
 				const element = emotes[index];
-				if (!this.emotes[element.id]) {
-					this.emotes[element.id] = {
-						texture: new Texture(element.gif.canvas),
-						name: element.name,
-						id: element.id,
-						gif: element.gif,
+				if (!this.emotes[element.url]) {
+					console.log(element)
+					this.emotes[element.url] = {
+						texture: new Texture(element.canvas),
+						element,
 					};
 					if (this.options.textureHook) {
-						this.options.textureHook(this.emotes[element.id].texture, element.name);
+						this.options.textureHook(this.emotes[element.url].texture, element.name);
 					}
-					this.emotes[element.id].material = new this.options.materialType({
-						map: this.emotes[element.id].texture,
+					this.emotes[element.url].material = new this.options.materialType({
+						map: this.emotes[element.url].texture,
 						...this.options.materialOptions
 					})
 					if (this.options.materialHook) {
-						this.options.materialHook(this.emotes[element.id].material, element.name);
+						this.options.materialHook(this.emotes[element.url].material, element.name);
 					}
 				}
-				output.push(this.emotes[element.id]);
+				output.push(this.emotes[element.url]);
 			}
 			this.listeners.forEach(cb => {
 				cb(output);
@@ -73,10 +72,17 @@ class TwitchEmotes {
 		}
 	}
 
+	dispose () {
+		this.EmoteService.dispose();
+		this.disposing = true;
+		delete this.emotes;
+	}
+
 	updateAllEmotes() {
+		if (this.disposing === true) return;
 		for (let key in this.emotes) {
-			if (this.emotes[key].gif && this.emotes[key].gif.needsUpdate) {
-				this.emotes[key].gif.needsUpdate = false;
+			if (this.emotes[key] && this.emotes[key].element.needsUpdate) {
+				this.emotes[key].element.needsUpdate = false;
 				this.emotes[key].texture.needsUpdate = true;
 			}
 		}

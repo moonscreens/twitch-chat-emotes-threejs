@@ -17,7 +17,7 @@
 	},
 	"homepage": "https://github.com/moonscreens/twitch-chat-emotes-threejs#readme",
 	"dependencies": {
-		"twitch-chat-emotes": "^0.2.6"
+		"twitch-chat-emotes": "^0.3.3"
 	},
 	"devDependencies": {
 		"css-loader": "^5.2.6",
@@ -25,7 +25,7 @@
 		"html-loader": "^2.1.2",
 		"html-webpack-plugin": "^5.5.0",
 		"style-loader": "^3.3.1",
-		"three": "^0.143.0",
+		"three": "^0.146.0",
 		"webpack": "^5.44.0",
 		"webpack-cli": "^4.7.2",
 		"webpack-dev-server": "^4.4.0"
