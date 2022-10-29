@@ -44,7 +44,6 @@ class TwitchEmotes {
 			for (let index = 0; index < emotes.length; index++) {
 				const element = emotes[index];
 				if (!this.emotes[element.url]) {
-					console.log(element)
 					this.emotes[element.url] = {
 						texture: new Texture(element.canvas),
 						element,
