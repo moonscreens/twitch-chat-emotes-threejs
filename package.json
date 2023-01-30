@@ -4,7 +4,8 @@
 	"description": "A library to use `twitch-chat-emotes` with ThreeJS",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "npx webpack serve"
+		"dev": "npx webpack serve",
+		"start": "npm run dev"
 	},
 	"repository": {
 		"type": "git",
@@ -17,7 +18,7 @@
 	},
 	"homepage": "https://github.com/moonscreens/twitch-chat-emotes-threejs#readme",
 	"dependencies": {
-		"twitch-chat-emotes": "^0.3.3"
+		"twitch-chat-emotes": "^0.4.1"
 	},
 	"devDependencies": {
 		"css-loader": "^5.2.6",
