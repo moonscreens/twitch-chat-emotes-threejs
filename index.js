@@ -43,23 +43,29 @@ class TwitchEmotes {
 			let output = [];
 			for (let index = 0; index < emotes.length; index++) {
 				const element = emotes[index];
-				if (!this.emotes[element.url]) {
-					this.emotes[element.url] = {
+				if (!this.emotes[element.service]) this.emotes[element.service] = {};
+
+				if (!this.emotes[element.service][element.name]) {
+					const emote = {
 						texture: new Texture(element.canvas),
 						element,
 					};
+
+					this.emotes[element.service][element.name] = emote;
+
 					if (this.options.textureHook) {
-						this.options.textureHook(this.emotes[element.url].texture, element.name);
+						this.options.textureHook(emote.texture, element.name);
 					}
-					this.emotes[element.url].material = new this.options.materialType({
-						map: this.emotes[element.url].texture,
+					emote.material = new this.options.materialType({
+						map: emote.texture,
 						...this.options.materialOptions
 					})
 					if (this.options.materialHook) {
-						this.options.materialHook(this.emotes[element.url].material, element.name);
+						this.options.materialHook(emote.material, element.name);
 					}
+
 				}
-				output.push(this.emotes[element.url]);
+				output.push(this.emotes[element.service][element.name]);
 			}
 			this.listeners.forEach(cb => {
 				cb(output);
@@ -71,7 +77,7 @@ class TwitchEmotes {
 		}
 	}
 
-	dispose () {
+	dispose() {
 		this.EmoteService.dispose();
 		this.disposing = true;
 		delete this.emotes;
@@ -79,10 +85,14 @@ class TwitchEmotes {
 
 	updateAllEmotes() {
 		if (this.disposing === true) return;
-		for (let key in this.emotes) {
-			if (this.emotes[key] && this.emotes[key].element.needsUpdate) {
-				this.emotes[key].element.needsUpdate = false;
-				this.emotes[key].texture.needsUpdate = true;
+		for (let service in this.emotes) {
+			const emotes = this.emotes[service];
+
+			for (let key in emotes) {
+				if (emotes[key] && emotes[key].element.needsUpdate) {
+					emotes[key].element.needsUpdate = false;
+					emotes[key].texture.needsUpdate = true;
+				}
 			}
 		}
 		if (this.options.updateAutonomously) {

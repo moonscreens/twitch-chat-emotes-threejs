@@ -109,7 +109,7 @@ ChatInstance.listen((emotes) => {
 
 		const shadow = new Mesh(emoteGeometry, shadowMaterial);
 		shadow.position.x = sprite.position.x;
-		shadow.position.z = -0.01;
+		shadow.position.z = -0.1;
 		shadow.scale.setScalar(1.1)
 		group.add(shadow);
 	})

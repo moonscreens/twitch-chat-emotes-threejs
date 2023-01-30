@@ -2269,10 +2269,10 @@ tslib@^2.0.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
-twitch-chat-emotes@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/twitch-chat-emotes/-/twitch-chat-emotes-0.4.1.tgz#ded8c6c24d0daf05bccdc5bed4409a994a01fa55"
-  integrity sha512-wtL0byyV1LE4SswpKfGA8AtpAouN8sgotZJa4RP/HF4my6lrdQwWtSYJ42+9H4u7B/31tpAT1kxnNKbFZpH9Og==
+twitch-chat-emotes@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/twitch-chat-emotes/-/twitch-chat-emotes-0.4.2.tgz#9a760b04e5f8f951a354bd131d093e5172a4e27a"
+  integrity sha512-yJ2xSuKlHOoark4JnT9i2x7ZDFLPXhfYa12RGSBlWxFOQZR0VhxW88KyIlLLM/9MiI3eFIsARdrwfS2JO+nOpQ==
   dependencies:
     tmi.js "^1.8.5"
 
