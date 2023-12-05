@@ -28,6 +28,10 @@ const ChatInstance = new TwitchChat({
 		transparent: true,
 	},
 
+	textureHook: texture => {
+		texture.colorSpace = THREE.SRGBColorSpace
+	},
+
 	channels,
 	maximumEmoteLimit: 3,
 });
