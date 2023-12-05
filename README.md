@@ -5,6 +5,7 @@ A Three.JS specific variant of the [twitch-chat-emotes](https://github.com/Caleb
 
 ```js
 import TwitchChat from 'twitch-chat-emotes-threejs';
+import * as THREE from 'three';
 
 const ChatInstance = new TwitchChat({
 	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
@@ -16,7 +17,10 @@ const ChatInstance = new TwitchChat({
 	},
 
 	materialHook: material => console.log, // receives unique emote materials on creation
-	textureHook: texture => console.log, // receives unique emote textures on creation
+
+	textureHook: texture => { // receives unique emote textures on creation
+		texture.colorSpace = THREE.SRGBColorSpace; // fixes washed out colors
+	},
 
 	channels,
 	maximumEmoteLimit: 3,
