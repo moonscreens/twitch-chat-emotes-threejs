@@ -39,7 +39,7 @@ class TwitchEmotes {
 		this.addCustomEmote = this.EmoteService.addCustomEmote.bind(this.EmoteService);
 
 		// add a callback function for when a new message with emotes is sent
-		this.EmoteService.on("emotes", (emotes) => {
+		this.EmoteService.on("emotes", (emotes, extra_data) => {
 			let output = [];
 			for (let index = 0; index < emotes.length; index++) {
 				const element = emotes[index];
@@ -68,7 +68,7 @@ class TwitchEmotes {
 				output.push(this.emotes[element.service][element.name]);
 			}
 			this.listeners.forEach(cb => {
-				cb(output);
+				cb(output, extra_data);
 			});
 		})
 

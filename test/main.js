@@ -1,6 +1,6 @@
 import TwitchChat from "..";
 import "./main.css";
-import { Group, Mesh, MeshBasicMaterial, PerspectiveCamera, PlaneBufferGeometry, Scene, Sprite, SpriteMaterial, Vector3, WebGLRenderer } from "three";
+import * as THREE from "three";
 
 /*
 ** connect to twitch chat
@@ -21,7 +21,7 @@ if (query_vars.channels) {
 
 const ChatInstance = new TwitchChat({
 	// If using planes, consider using MeshBasicMaterial instead of SpriteMaterial
-	materialType: MeshBasicMaterial,
+	materialType: THREE.MeshBasicMaterial,
 
 	// Passed to emote material on creation
 	materialOptions: {
@@ -32,14 +32,13 @@ const ChatInstance = new TwitchChat({
 	maximumEmoteLimit: 3,
 });
 
-import testImageURL from './test.png';
-ChatInstance.addCustomEmote('test', testImageURL);
+ChatInstance.addCustomEmote('test', '/test.png');
 
 /*
 ** Initiate ThreejS scene
 */
 
-const camera = new PerspectiveCamera(
+const camera = new THREE.PerspectiveCamera(
 	70,
 	window.innerWidth / window.innerHeight,
 	0.1,
@@ -47,8 +46,8 @@ const camera = new PerspectiveCamera(
 );
 camera.position.z = 5;
 
-const scene = new Scene();
-const renderer = new WebGLRenderer({ antialias: false, transparent: true });
+const scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer({ antialias: false, transparent: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 function resize() {
@@ -91,23 +90,25 @@ function draw() {
 ** Handle Twitch Chat Emotes
 */
 const sceneEmoteArray = [];
-const emoteGeometry = new PlaneBufferGeometry(1, 1);
-const shadowMaterial = new MeshBasicMaterial({
+const emoteGeometry = new THREE.PlaneGeometry(1, 1);
+const shadowMaterial = new THREE.MeshBasicMaterial({
 	color: 0x222222,
 })
-ChatInstance.listen((emotes) => {
-	const group = new Group();
+ChatInstance.listen((emotes, data) => {
+	console.log(data.user.username + ': ' + data.message, emotes);
+
+	const group = new THREE.Group();
 	group.lifespan = 5000;
 	group.timestamp = Date.now();
 
 	let i = 0;
 	emotes.forEach((emote) => {
-		const sprite = new Mesh(emoteGeometry, emote.material);
+		const sprite = new THREE.Mesh(emoteGeometry, emote.material);
 		sprite.position.x = i;
 		group.add(sprite);
 		i++;
 
-		const shadow = new Mesh(emoteGeometry, shadowMaterial);
+		const shadow = new THREE.Mesh(emoteGeometry, shadowMaterial);
 		shadow.position.x = sprite.position.x;
 		shadow.position.z = -0.1;
 		shadow.scale.setScalar(1.1)
@@ -115,7 +116,7 @@ ChatInstance.listen((emotes) => {
 	})
 
 	// Set velocity to a random normalized value
-	group.velocity = new Vector3(
+	group.velocity = new THREE.Vector3(
 		(Math.random() - 0.5) * 2,
 		(Math.random() - 0.5) * 2,
 		(Math.random() - 0.5) * 2
